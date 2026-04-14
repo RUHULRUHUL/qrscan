@@ -10,6 +10,7 @@ import 'package:qrscan/core/constant/app_string.dart';
 import 'package:qrscan/core/constant/extentions.dart';
 import 'package:qrscan/feature/component/common_image.dart';
 import 'package:qrscan/feature/component/common_text.dart';
+import 'package:qrscan/route/approute.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -285,7 +286,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Widget _buildArrowButton() {
     return GestureDetector(
       onTap: () {
-        // Navigate to next screen
+        Get.toNamed(AppRoute.bottomNavScreen);
       },
       child: SizedBox(
         width: 100, // ripple এর max size (52 + 28 + কিছুটা padding)

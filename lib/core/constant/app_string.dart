@@ -1,8 +1,69 @@
-
-
 class AppString {
   static const String getStarted = "Get Started";
-  static const String gotAndEnjoyOurFeature = "Go and enjoy our features for free\nand make your life easy with us.";
+  static const String gotAndEnjoyOurFeature =
+      "Go and enjoy our features for free\nand make your life easy with us.";
   static const String welcometoMino = "Welcome to Mino";
-
+  static const String text = "Text";
+  static const String website = "Website";
+  static const String wifi = "wi-fi";
+  static const String event = "Event";
+  static const String contact = "Contact";
+  static const String business = "business";
+  static const String location = "Location";
+  static const String whatsapp = "whatsApp";
+  static const String email = "Email";
+  static const String twitter = "Twitter";
+  static const String instagram = "Instagram";
+  static const String telephone = "Telephone";
+  static const String generateQR = "Generate QR";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
+  // static const String text = "Text";
 }
