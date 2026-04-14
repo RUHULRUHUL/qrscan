@@ -1,14 +1,69 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:qrscan/core/constant/extentions.dart';
-import 'package:qrscan/feature/component/common_text.dart';
+import 'package:get/get.dart';
+import 'package:qrscan/core/constant/app_color.dart';
+import 'package:qrscan/core/constant/app_image.dart';
+import 'package:qrscan/feature/component/common_image.dart';
+import 'package:qrscan/route/approute.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+
+    animation = Tween<double>(begin: 0.8, end: 1.2).animate(controller);
+
+    Timer(const Duration(seconds: 2), () {
+      if (mounted) {
+        Get.toNamed(
+          AppRoute.onbordingScreen,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:const CommonText(text: "Splash Screen").center,
+      backgroundColor: AppColor.primary,
+      body: Center(
+        child: Hero(
+          tag: "logoHero", // ✅ MUST not be null
+          child: ScaleTransition(
+            scale: animation,
+            child: const CommonImage(
+              imageSrc: AppImage.logo,
+              imageType: ImageType.png,
+              height: 200,
+              width: 200,
+              fill: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
