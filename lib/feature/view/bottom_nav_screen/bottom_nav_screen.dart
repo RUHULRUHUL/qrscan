@@ -6,6 +6,7 @@ import 'package:qrscan/core/constant/app_color.dart';
 import 'package:qrscan/core/constant/app_icon.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 import 'package:qrscan/feature/view/generate_screens/generate_screen.dart';
+import 'package:qrscan/feature/view/history_screen/history_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
@@ -17,7 +18,7 @@ class BottomNavScreen extends StatefulWidget {
 class _BottomNavScreenState extends State<BottomNavScreen> {
   int _selectedIndex = 1;
   // ignore: prefer_const_constructors
-  List screenList = [GenerateScreen(), SizedBox(), SizedBox()];
+  List screenList = [GenerateScreen(), SizedBox(), HistoryScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         clipBehavior: Clip.none,
         alignment: Alignment.topCenter,
         children: [
-          /// 🔲 Background Container
           Positioned(
             bottom: 0,
             left: 0,

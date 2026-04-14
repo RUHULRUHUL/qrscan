@@ -16,9 +16,9 @@ class AppString {
   static const String instagram = "Instagram";
   static const String telephone = "Telephone";
   static const String generateQR = "Generate QR";
-  // static const String text = "Text";
-  // static const String text = "Text";
-  // static const String text = "Text";
+  static const String history = "History ";
+  static const String scan = "Scan";
+  static const String create = "Create";
   // static const String text = "Text";
   // static const String text = "Text";
   // static const String text = "Text";
