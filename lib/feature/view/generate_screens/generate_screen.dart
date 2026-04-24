@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:qrscan/core/constant/app_color.dart';
 import 'package:qrscan/core/constant/app_string.dart';
-import 'package:qrscan/feature/component/common_text.dart';
+import 'package:qrscan/feature/component/common_appbar.dart';
 import 'package:qrscan/feature/view/generate_screens/controller/qr_generate_controller.dart';
 import 'package:qrscan/feature/view/generate_screens/widgets/qr_builder_card.dart';
+import 'package:qrscan/route/approute.dart';
 
 class GenerateScreen extends StatelessWidget {
   const GenerateScreen({super.key});
@@ -16,16 +18,9 @@ class GenerateScreen extends StatelessWidget {
     final QrGenerateController controller = Get.find<QrGenerateController>();
     return Scaffold(
       backgroundColor: AppColor.black33,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      backgroundColor: AppColor.black33,
-        title:const CommonText(
-          text: AppString.generateQR,
-          fontSize: 27,
-          fontWeight: FontWeight.w400,
-          color: Color(0xFFD9D9D9),
-        ),
-      ),
+      appBar: CommonAppBar(title: AppString.generateQR,onMenuClick: () {
+        Get.toNamed(AppRoute.settingScreen);
+      },),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
         child: GridView.builder(

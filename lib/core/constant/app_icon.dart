@@ -15,5 +15,11 @@ class AppIcon {
   static const String whatsapp = "assets/icons/whatsapp.svg";
   static const String wifi = "assets/icons/wifi.svg";
   static const String delete = "assets/icons/delete.svg";
+  static const String vibrate = "assets/icons/vibrate.svg";
+  static const String sound = "assets/icons/sound.svg";
+  static const String rate = "assets/icons/rate.svg";
+  static const String share = "assets/icons/share.svg";
+  static const String privacy = "assets/icons/privacy.svg";
+  static const String menu = "assets/icons/menu.svg";
 
 }

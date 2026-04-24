@@ -7,6 +7,7 @@ import 'package:qrscan/core/constant/app_icon.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 import 'package:qrscan/feature/view/generate_screens/generate_screen.dart';
 import 'package:qrscan/feature/view/history_screen/history_screen.dart';
+import 'package:qrscan/feature/view/scanner_screen/scanner_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
@@ -18,7 +19,7 @@ class BottomNavScreen extends StatefulWidget {
 class _BottomNavScreenState extends State<BottomNavScreen> {
   int _selectedIndex = 1;
   // ignore: prefer_const_constructors
-  List screenList = [GenerateScreen(), SizedBox(), HistoryScreen()];
+  List screenList = [GenerateScreen(), ScannerScreen(), HistoryScreen()];
 
   @override
   Widget build(BuildContext context) {

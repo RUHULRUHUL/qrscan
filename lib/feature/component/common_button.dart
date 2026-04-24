@@ -17,9 +17,9 @@ class CommonButton extends StatelessWidget {
   final double buttonRadius;
   final double buttonHeight;
   final double buttonWidth;
-  final Widget? icon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final double strokeWidth;
-
   final bool isLoading;
 
   const CommonButton({
@@ -36,7 +36,8 @@ class CommonButton extends StatelessWidget {
     this.buttonWidth = double.infinity,
     this.borderColor = AppColor.primary,
     this.strokeWidth = 4,
-    this.icon,
+    this.prefixIcon,
+    this.suffixIcon,
     super.key,
   });
 
@@ -90,8 +91,8 @@ class CommonButton extends StatelessWidget {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (icon != null) icon!,
-                    if (icon != null) 8.width,
+                    if (prefixIcon != null) prefixIcon!,
+                    if (prefixIcon != null) 8.width,
                     CommonText(
                       text: titleText,
                       fontSize: titleSize,
@@ -99,6 +100,9 @@ class CommonButton extends StatelessWidget {
                       textAlign: TextAlign.center,
                       color: titleColor,
                     ),
+
+                    if (suffixIcon != null) suffixIcon!,
+                    if (suffixIcon != null) 8.width,
                   ],
                 ),
         ),
