@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 import 'package:qrscan/feature/view/setting_screen/widget/custom_toggle_switch.dart';
 
+// ignore: must_be_immutable
 class SettingItem extends StatelessWidget {
   String icon;
   String title;

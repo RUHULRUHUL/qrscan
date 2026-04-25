@@ -21,5 +21,7 @@ class AppIcon {
   static const String share = "assets/icons/share.svg";
   static const String privacy = "assets/icons/privacy.svg";
   static const String menu = "assets/icons/menu.svg";
+  static const String visibility = "assets/icons/visibility.svg";
+  static const String visibilityOff = "assets/icons/visibilityOff.svg";
 
 }

@@ -1,6 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -93,15 +91,6 @@ class _ScannerOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// Blur background
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-          child: Container(
-            color: Colors.black.withOpacity(0.5),
-          ),
-        ),
-
-        /// Transparent cutout
         Center(
           child: Container(
             width: 260,

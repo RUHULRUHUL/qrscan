@@ -18,9 +18,12 @@ class GenerateScreen extends StatelessWidget {
     final QrGenerateController controller = Get.find<QrGenerateController>();
     return Scaffold(
       backgroundColor: AppColor.black33,
-      appBar: CommonAppBar(title: AppString.generateQR,onMenuClick: () {
-        Get.toNamed(AppRoute.settingScreen);
-      },),
+      appBar: CommonAppBar(
+        title: AppString.generateQR,
+        onMenuClick: () {
+          Get.toNamed(AppRoute.settingScreen);
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
         child: GridView.builder(
@@ -34,7 +37,20 @@ class GenerateScreen extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             var item = controller.qrItem[index];
-            return QrBuilderCard(title: item["title"], icon: item["icon"]);
+            return QrBuilderCard(
+              title: item["title"],
+              icon: item["icon"],
+              onTap: () {
+                Get.toNamed(
+                  AppRoute.qrCodeGeneratorScreen,
+                  arguments: {
+                    "title": item["title"],
+                    "icon": item["icon"],
+                    "type": item["type"],
+                  },
+                );
+              },
+            );
           },
         ),
       ),
