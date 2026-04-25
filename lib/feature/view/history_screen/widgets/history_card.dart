@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:qrscan/core/constant/app_color.dart';
 import 'package:qrscan/core/constant/app_icon.dart';
 import 'package:qrscan/core/constant/extentions.dart';
 import 'package:qrscan/core/model/qr_history_item.dart';
 import 'package:qrscan/feature/component/common_text.dart';
+import 'package:qrscan/feature/view/history_screen/history_detail_screen.dart';
 
 class HistoryCard extends StatelessWidget {
   final QrHistoryItem item;
@@ -18,105 +20,111 @@ class HistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white.withValues(alpha: 0.08),
-            blurRadius: 2,
-            spreadRadius: 1,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        color: const Color(0xFF2A2A2A),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppColor.primary.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(10),
+    return InkWell(
+      onTap: () {
+        Get.to(() => HistoryDetailScreen(item: item));
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withValues(alpha: 0.08),
+              blurRadius: 2,
+              spreadRadius: 1,
+              offset: const Offset(0, 2),
             ),
-            child: Center(
-              child: SvgPicture.asset(
-                _getIconForType(item.qrType),
-                width: 22,
-                height: 22,
+          ],
+          color: const Color(0xFF2A2A2A),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AppColor.primary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  _getIconForType(item.qrType),
+                  width: 22,
+                  height: 22,
+                  colorFilter: const ColorFilter.mode(
+                    AppColor.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
+            12.width,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonText(
+                    text: item.title ?? item.content,
+                    color: const Color(0xFFD9D9D9),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                  ),
+                  4.height,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: item.type == 'scan'
+                              ? Colors.blue.withValues(alpha: 0.2)
+                              : Colors.green.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          item.type == 'scan' ? 'Scanned' : 'Generated',
+                          style: TextStyle(
+                            color: item.type == 'scan'
+                                ? Colors.blue.shade300
+                                : Colors.green.shade300,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      8.width,
+                      Text(
+                        _formatDate(item.timestamp),
+                        style: const TextStyle(
+                          color: Color(0xFF888888),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: onDelete,
+              icon: SvgPicture.asset(
+                AppIcon.delete,
+                width: 20,
+                height: 20,
                 colorFilter: const ColorFilter.mode(
-                  AppColor.primary,
+                  Colors.redAccent,
                   BlendMode.srcIn,
                 ),
               ),
             ),
-          ),
-          12.width,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonText(
-                  text: item.title ?? item.content,
-                  color: const Color(0xFFD9D9D9),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                ),
-                4.height,
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: item.type == 'scan'
-                            ? Colors.blue.withValues(alpha: 0.2)
-                            : Colors.green.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        item.type == 'scan' ? 'Scanned' : 'Generated',
-                        style: TextStyle(
-                          color: item.type == 'scan'
-                              ? Colors.blue.shade300
-                              : Colors.green.shade300,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    8.width,
-                    Text(
-                      _formatDate(item.timestamp),
-                      style: const TextStyle(
-                        color: Color(0xFF888888),
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            onPressed: onDelete,
-            icon: SvgPicture.asset(
-              AppIcon.delete,
-              width: 20,
-              height: 20,
-              colorFilter: const ColorFilter.mode(
-                Colors.redAccent,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:beep_sound/beep_sound.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:mobile_scanner/mobile_scanner.dart' hide Barcode;
@@ -51,15 +52,18 @@ class ScannerController extends GetxController {
 
     // Vibrate if enabled
     if (hive.vibrateOnScan) {
-      final hasVibrator = await Vibration.hasVibrator();
-      if (hasVibrator == true) {
-        Vibration.vibrate(duration: 200);
+      try {
+        // Pattern: wait 0ms, vibrate 300ms, wait 100ms, vibrate 300ms
+        await Vibration.vibrate(pattern: [0, 300, 100, 300]);
+      } catch (_) {
+        // Fallback to heavy haptic feedback
+        HapticFeedback.heavyImpact();
       }
     }
 
-    // Beep if enabled (using HapticFeedback as fallback)
+    // Beep if enabled
     if (hive.beepOnScan) {
-      HapticFeedback.heavyImpact();
+      BeepSound().playSysSound(AndroidSoundIDs.toneCdmaAbbrAlert.value);
     }
 
     // Save to history
