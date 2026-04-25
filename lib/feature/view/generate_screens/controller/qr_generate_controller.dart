@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qrscan/core/constant/app_icon.dart';
 import 'package:qrscan/core/constant/app_string.dart';
+import 'package:qrscan/core/helper/hive_helper.dart';
+import 'package:qrscan/core/model/qr_history_item.dart';
+import 'package:qrscan/feature/view/history_screen/controller/history_controller.dart';
 
 class QrGenerateController extends GetxController {
   List qrItem = [
@@ -19,6 +22,10 @@ class QrGenerateController extends GetxController {
     {"title": AppString.instagram, "icon": AppIcon.instagram, "type": "instagram"},
     {"title": AppString.telephone, "icon": AppIcon.phone, "type": "phone"},
   ];
+
+  // Generated QR data observable
+  var generatedQrData = ''.obs;
+  var currentQrType = ''.obs;
 
   // Text
   final textController = TextEditingController();
@@ -77,24 +84,23 @@ class QrGenerateController extends GetxController {
   // Phone
   final phoneNumberController = TextEditingController();
 
-  String generatedQrData = "";
-
   String generateQrContent(String type) {
+    currentQrType.value = type;
     switch (type) {
       case "text":
-        generatedQrData = textController.text.trim();
+        generatedQrData.value = textController.text.trim();
         break;
       case "web":
         var url = websiteUrlController.text.trim();
         if (url.isNotEmpty && !url.startsWith("http")) {
           url = "https://$url";
         }
-        generatedQrData = url;
+        generatedQrData.value = url;
         break;
       case "wifi":
         final ssid = wifiNetworkController.text.trim();
         final pass = wifiPasswordController.text.trim();
-        generatedQrData = "WIFI:S:$ssid;T:WPA;P:$pass;;";
+        generatedQrData.value = "WIFI:S:$ssid;T:WPA;P:$pass;;";
         break;
       case "event":
         final name = eventNameController.text.trim();
@@ -102,11 +108,11 @@ class QrGenerateController extends GetxController {
         final end = eventEndDateController.text.trim();
         final loc = eventLocationController.text.trim();
         final desc = eventDescriptionController.text.trim();
-        generatedQrData =
+        generatedQrData.value =
             "BEGIN:VEVENT\nSUMMARY:$name\nDTSTART:$start\nDTEND:$end\nLOCATION:$loc\nDESCRIPTION:$desc\nEND:VEVENT";
         break;
       case "contact":
-        generatedQrData = _buildVCard(
+        generatedQrData.value = _buildVCard(
           firstName: contactFirstNameController.text.trim(),
           lastName: contactLastNameController.text.trim(),
           org: contactCompanyController.text.trim(),
@@ -119,7 +125,7 @@ class QrGenerateController extends GetxController {
         );
         break;
       case "buissness":
-        generatedQrData = _buildVCard(
+        generatedQrData.value = _buildVCard(
           org: businessCompanyNameController.text.trim(),
           title: businessIndustryController.text.trim(),
           tel: businessPhoneController.text.trim(),
@@ -130,31 +136,55 @@ class QrGenerateController extends GetxController {
         );
         break;
       case "location":
-        generatedQrData = locationAddressController.text.trim();
+        generatedQrData.value = locationAddressController.text.trim();
         break;
       case "whatsApp":
         final num = whatsappNumberController.text.trim();
-        generatedQrData = "https://wa.me/$num";
+        generatedQrData.value = "https://wa.me/$num";
         break;
       case "email":
-        generatedQrData = "mailto:${emailAddressController.text.trim()}";
+        generatedQrData.value = "mailto:${emailAddressController.text.trim()}";
         break;
       case "twitter":
         final user = twitterUsernameController.text.trim();
-        generatedQrData = "https://twitter.com/$user";
+        generatedQrData.value = "https://twitter.com/$user";
         break;
       case "instagram":
         final user = instagramUsernameController.text.trim();
-        generatedQrData = "https://instagram.com/$user";
+        generatedQrData.value = "https://instagram.com/$user";
         break;
       case "phone":
-        generatedQrData = "tel:${phoneNumberController.text.trim()}";
+        generatedQrData.value = "tel:${phoneNumberController.text.trim()}";
         break;
       default:
-        generatedQrData = "";
+        generatedQrData.value = "";
     }
-    update();
-    return generatedQrData;
+
+    // Save to history if valid
+    if (generatedQrData.value.isNotEmpty) {
+      _saveToHistory();
+    }
+
+    return generatedQrData.value;
+  }
+
+  void _saveToHistory() async {
+    final hive = HiveHelper();
+    await hive.addHistory(QrHistoryItem(
+      id: hive.generateId(),
+      content: generatedQrData.value,
+      type: 'generate',
+      qrType: currentQrType.value,
+      timestamp: DateTime.now(),
+      title: generatedQrData.value.length > 40
+          ? '${generatedQrData.value.substring(0, 40)}...'
+          : generatedQrData.value,
+    ));
+
+    // Refresh history if on history screen
+    if (Get.isRegistered<HistoryController>()) {
+      Get.find<HistoryController>().refreshHistory();
+    }
   }
 
   String _buildVCard({

@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qrscan/core/dependency/dependency_injection.dart';
+import 'package:qrscan/core/helper/hive_helper.dart';
 import 'package:qrscan/route/approute.dart';
 
-void main() {
-  _action();
-  runApp(const MyApp());
-}
-
-_action() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var di = DependencyInjection();
-  di.dependencies();
-
+  await HiveHelper().init();
+  DependencyInjection().dependencies();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +25,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Mino_Ride',
+          title: 'Mino QR',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),

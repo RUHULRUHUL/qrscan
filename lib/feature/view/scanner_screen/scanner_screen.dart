@@ -73,7 +73,7 @@ class ScannerScreen extends StatelessWidget {
                         ? "Scanned ✔"
                         : "Scan a QR or Barcode",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 16,
                     ),
                   )),

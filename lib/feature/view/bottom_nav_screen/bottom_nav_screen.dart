@@ -50,7 +50,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 borderRadius: BorderRadius.circular(32),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.15),
+                    color: Colors.white.withValues(alpha: 0.15),
                     blurRadius: 20,
                     spreadRadius: 2,
                     offset: const Offset(0, 8), // নিচে shadow
@@ -139,7 +139,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColor.primary.withOpacity(0.5),
+                    color: AppColor.primary.withValues(alpha: 0.5),
                     blurRadius: 16,
                     spreadRadius: 2,
                   ),

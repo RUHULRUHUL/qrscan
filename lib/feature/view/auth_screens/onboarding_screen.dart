@@ -141,7 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           // Status bar area
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 80),
+              padding: const EdgeInsets.only(bottom: 100),
               child: Center(
                 child: _buildQRSection(),
               ),
@@ -177,7 +177,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               height: size,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.12),
+                color: Colors.white.withValues(alpha: 0.12),
               ),
             ),
           );
@@ -250,7 +250,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Widget _buildBottomSection() {
     return Container(
       width: double.infinity,
-      height: Get.height / 3,
+      height: Get.height / 2.5,
       padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 36),
       decoration: const BoxDecoration(
         color: Color(0xFF2C2C2C),
@@ -304,7 +304,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: const Color(0xFFF5A623)
-                        .withOpacity(0.4 * (1 - _rippleAnimation.value)),
+                        .withValues(alpha: 0.4 * (1 - _rippleAnimation.value)),
                   ),
                 ),
                 // Button

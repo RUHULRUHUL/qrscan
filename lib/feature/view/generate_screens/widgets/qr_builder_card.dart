@@ -1,15 +1,19 @@
-// ignore_for_file: must_be_immutable, deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qrscan/core/constant/app_color.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 
 class QrBuilderCard extends StatelessWidget {
-  String title;
-  String icon;
-  VoidCallback onTap;
-  QrBuilderCard({super.key, required this.title, required this.icon,required this.onTap});
+  final String title;
+  final String icon;
+  final VoidCallback onTap;
+
+  const QrBuilderCard({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +35,15 @@ class QrBuilderCard extends StatelessWidget {
               padding: const EdgeInsets.all(30),
               child: SvgPicture.asset(
                 icon,
-                color: AppColor.primary,
+                colorFilter: const ColorFilter.mode(
+                  AppColor.primary,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),
-      
           Positioned(
-            top: -12, // ✅ half outside effect
+            top: -12,
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               decoration: BoxDecoration(

@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
@@ -7,6 +5,7 @@ import 'package:qrscan/core/constant/app_icon.dart';
 import 'package:qrscan/core/constant/extentions.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 import 'package:qrscan/route/approute.dart';
+
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
@@ -22,7 +21,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleColor = const Color(0xFFFFFFFF),
     this.onBackTap,
     this.isCenterTitle = false,
-    this.onMenuClick
+    this.onMenuClick,
   });
 
   @override
@@ -30,7 +29,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      centerTitle: false,
+      centerTitle: isCenterTitle,
       automaticallyImplyLeading: false,
       title: InkWell(
         onTap: onBackTap ?? () => Navigator.pop(context),
@@ -49,9 +48,18 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: titleColor,
                 ).start,
               ),
-              IconButton(onPressed: (){
-                Get.toNamed(AppRoute.settingScreen);
-              }, icon: SvgPicture.asset(AppIcon.menu,color: const Color(0xFFFDB623),))
+              IconButton(
+                onPressed: () {
+                  Get.toNamed(AppRoute.settingScreen);
+                },
+                icon: SvgPicture.asset(
+                  AppIcon.menu,
+                  colorFilter: const ColorFilter.mode(
+                    Color(0xFFFDB623),
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

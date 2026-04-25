@@ -4,8 +4,11 @@ import 'package:qrscan/core/constant/app_color.dart';
 import 'package:qrscan/core/constant/app_icon.dart';
 import 'package:qrscan/core/constant/app_string.dart';
 import 'package:qrscan/core/constant/extentions.dart';
+import 'package:qrscan/core/helper/hive_helper.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 import 'package:qrscan/feature/view/setting_screen/widget/setting_item.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -15,13 +18,27 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  final HiveHelper _hive = HiveHelper();
   bool _vibrateEnabled = false;
   bool _beepEnabled = false;
 
   @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  void _loadSettings() {
+    setState(() {
+      _vibrateEnabled = _hive.vibrateOnScan;
+      _beepEnabled = _hive.beepOnScan;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(225, 92, 92, 104),
+      backgroundColor: const Color(0xFF1A1A1A),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -35,8 +52,9 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(5)),
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 child: const Icon(
                   Icons.keyboard_arrow_left,
                   color: Color(0xFFFDB623),
@@ -45,8 +63,6 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
             30.height,
-
-            //================================================setti  ngs block
             const CommonText(
               text: AppString.settings,
               fontSize: 26,
@@ -55,30 +71,31 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             20.height,
             SettingItem(
-                icon: AppIcon.vibrate,
-                title: AppString.vibrate,
-                subTitle: AppString.vibrationWhenScan,
-                switchValue: _vibrateEnabled,
-                onSwitch: (value) {
-                  setState(() {
-                    _vibrateEnabled = value;
-                  });
-                }),
-
+              icon: AppIcon.vibrate,
+              title: AppString.vibrate,
+              subTitle: AppString.vibrationWhenScan,
+              switchValue: _vibrateEnabled,
+              onSwitch: (value) async {
+                await _hive.setVibrate(value);
+                setState(() {
+                  _vibrateEnabled = value;
+                });
+              },
+            ),
             20.height,
             SettingItem(
-                icon: AppIcon.sound,
-                title: AppString.beep,
-                subTitle: AppString.beepWhenScan,
-                switchValue: _beepEnabled,
-                onSwitch: (value) {
-                  setState(() {
-                    _beepEnabled = value;
-                  });
-                }),
+              icon: AppIcon.sound,
+              title: AppString.beep,
+              subTitle: AppString.beepWhenScan,
+              switchValue: _beepEnabled,
+              onSwitch: (value) async {
+                await _hive.setBeep(value);
+                setState(() {
+                  _beepEnabled = value;
+                });
+              },
+            ),
             50.height,
-
-            //================================================Support
             const CommonText(
               text: AppString.support,
               fontSize: 26,
@@ -87,20 +104,32 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             20.height,
             SettingItem(
-                icon: AppIcon.rate,
-                title: AppString.rateUs,
-                subTitle: AppString.yourBestReward),
-
+              icon: AppIcon.rate,
+              title: AppString.rateUs,
+              subTitle: AppString.yourBestReward,
+              onTap: () {},
+            ),
             20.height,
             SettingItem(
-                icon: AppIcon.share,
-                title: AppString.share,
-                subTitle: AppString.shareAppOther),
+              icon: AppIcon.share,
+              title: AppString.share,
+              subTitle: AppString.shareAppOther,
+              onTap: () {
+                Share.share('Check out Mino QR Scanner & Generator app!');
+              },
+            ),
             20.height,
             SettingItem(
-                icon: AppIcon.privacy,
-                title: AppString.privacyPolicy,
-                subTitle: AppString.followOurPolicies),
+              icon: AppIcon.privacy,
+              title: AppString.privacyPolicy,
+              subTitle: AppString.followOurPolicies,
+              onTap: () async {
+                final uri = Uri.parse('https://www.google.com');
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
+            ),
           ],
         ),
       ),

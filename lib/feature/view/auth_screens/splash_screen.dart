@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     Timer(const Duration(seconds: 2), () {
       if (mounted) {
-        Get.toNamed(
+        Get.offNamed(
           AppRoute.onbordingScreen,
         );
       }

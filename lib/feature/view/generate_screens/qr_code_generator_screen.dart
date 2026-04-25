@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrscan/core/constant/app_color.dart';
 import 'package:qrscan/core/constant/app_string.dart';
 import 'package:qrscan/core/constant/extentions.dart';
@@ -47,7 +48,6 @@ class QrCodeGeneratorScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      // Type icon
                       if (icon.isNotEmpty)
                         SvgPicture.asset(
                           icon,
@@ -59,10 +59,8 @@ class QrCodeGeneratorScreen extends StatelessWidget {
                           ),
                         ),
                       16.height,
-                      // Dynamic form based on type
                       QrTypeFormFactory(type: type),
                       20.height,
-                      // Generate button
                       CommonButton(
                         titleText: AppString.generateQRCode,
                         titleColor: AppColor.textBlack,
@@ -71,14 +69,88 @@ class QrCodeGeneratorScreen extends StatelessWidget {
                         titleSize: 16,
                         buttonHeight: 48,
                         onTap: () {
-                          final data = controller.generateQrContent(type);
-                          debugPrint("Generated QR Data: $data");
+                          controller.generateQrContent(type);
                         },
                       ),
                     ],
                   ),
                 ),
               ),
+              24.height,
+              // Generated QR Preview
+              Obx(() {
+                if (controller.generatedQrData.value.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                return Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    children: [
+                      QrImageView(
+                        data: controller.generatedQrData.value,
+                        version: QrVersions.auto,
+                        size: 220,
+                        backgroundColor: Colors.white,
+                        eyeStyle: const QrEyeStyle(
+                          eyeShape: QrEyeShape.square,
+                          color: Colors.black,
+                        ),
+                        dataModuleStyle: const QrDataModuleStyle(
+                          dataModuleShape: QrDataModuleShape.square,
+                          color: Colors.black,
+                        ),
+                      ),
+                      16.height,
+                      Text(
+                        controller.generatedQrData.value,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 12,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      16.height,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CommonButton(
+                              titleText: 'Copy',
+                              titleSize: 14,
+                              buttonHeight: 44,
+                              prefixIcon: const Icon(Icons.copy,
+                                  color: Colors.white, size: 18),
+                              onTap: () {
+                                // Copy to clipboard
+                              },
+                            ),
+                          ),
+                          12.width,
+                          Expanded(
+                            child: CommonButton(
+                              titleText: 'Share',
+                              titleSize: 14,
+                              buttonHeight: 44,
+                              prefixIcon: const Icon(Icons.share,
+                                  color: Colors.white, size: 18),
+                              onTap: () {
+                                // Share QR
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              100.height,
             ],
           ),
         ),

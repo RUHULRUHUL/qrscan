@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qrscan/core/constant/app_color.dart';
@@ -12,33 +10,36 @@ class HistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HistoryController controler = Get.find<HistoryController>();
+    final HistoryController controller = Get.find<HistoryController>();
     return Container(
       padding: const EdgeInsets.all(7),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Colors.white.withOpacity(0.15),
-          blurRadius: 10,
-          spreadRadius: 1,
-          offset: const Offset(0, 0),
-        ),
-      ], color: AppColor.black33, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white.withValues(alpha: 0.15),
+            blurRadius: 10,
+            spreadRadius: 1,
+            offset: const Offset(0, 0),
+          ),
+        ],
+        color: AppColor.black33,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Row(
-        spacing: 15,
         children: [
           Expanded(
             child: InkWell(
               onTap: () {
-                controler.selectedTab.value = 0;
+                controller.selectedTab.value = 0;
               },
               child: Obx(() {
                 return AnimatedContainer(
-                  duration: const Duration(milliseconds: 600),
+                  duration: const Duration(milliseconds: 300),
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
-                    color: controler.selectedTab.value == 0
+                    color: controller.selectedTab.value == 0
                         ? AppColor.primary
-                        : null,
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const CommonText(
@@ -51,20 +52,22 @@ class HistoryTab extends StatelessWidget {
               }),
             ),
           ),
+          const SizedBox(width: 15),
           Expanded(
             child: InkWell(
               onTap: () {
-                controler.selectedTab.value = 1;
+                controller.selectedTab.value = 1;
               },
               child: Obx(() {
                 return AnimatedContainer(
-                  duration: const Duration(milliseconds: 600),
+                  duration: const Duration(milliseconds: 300),
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
-                      color: controler.selectedTab.value == 1
-                          ? AppColor.primary
-                          : null,
-                      borderRadius: BorderRadius.circular(6)),
+                    color: controller.selectedTab.value == 1
+                        ? AppColor.primary
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
                   child: const CommonText(
                     text: AppString.create,
                     fontSize: 17,
@@ -74,7 +77,7 @@ class HistoryTab extends StatelessWidget {
                 );
               }),
             ),
-          )
+          ),
         ],
       ),
     );

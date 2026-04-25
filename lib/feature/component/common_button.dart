@@ -51,14 +51,13 @@ class CommonButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               // ignore: deprecated_member_use
-              color: Colors.white.withOpacity(0.12),
+              color: Colors.white.withValues(alpha: 0.12),
               offset: const Offset(0, 3),
               blurRadius: 3,
               spreadRadius: 0,
             ),
             BoxShadow(
-              // ignore: deprecated_member_use
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               offset: const Offset(0, 1),
               blurRadius: 1,
               spreadRadius: -0.5,
