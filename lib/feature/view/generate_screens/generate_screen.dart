@@ -33,7 +33,7 @@ class GenerateScreen extends StatelessWidget {
             crossAxisCount: 3,
             mainAxisSpacing: 25,
             crossAxisSpacing: 10,
-            childAspectRatio: 1, // square item
+            childAspectRatio: 1,
           ),
           itemBuilder: (context, index) {
             var item = controller.qrItem[index];

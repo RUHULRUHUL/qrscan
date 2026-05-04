@@ -16,7 +16,7 @@ class HistoryScreen extends StatelessWidget {
     final HistoryController controller = Get.find<HistoryController>();
     return Scaffold(
       backgroundColor: AppColor.black33,
-      appBar: const CommonAppBar(title: AppString.history),
+      appBar:  CommonAppBar(title: AppString.history),
       body: Padding(
         padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
         child: Column(

@@ -6,6 +6,7 @@ import 'package:qrscan/core/constant/extentions.dart';
 import 'package:qrscan/feature/component/common_text.dart';
 import 'package:qrscan/route/approute.dart';
 
+// ignore: must_be_immutable
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
@@ -13,8 +14,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBackTap;
   final bool isCenterTitle;
   final VoidCallback? onMenuClick;
+  bool isBack;
 
-  const CommonAppBar({
+  CommonAppBar({
     super.key,
     required this.title,
     this.actions,
@@ -22,6 +24,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onBackTap,
     this.isCenterTitle = false,
     this.onMenuClick,
+    this.isBack = false,
   });
 
   @override
@@ -31,38 +34,77 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: isCenterTitle,
       automaticallyImplyLeading: false,
-      title: InkWell(
-        onTap: onBackTap ?? () => Navigator.pop(context),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: CommonText(
-                  text: title,
-                  fontSize: 24,
-                  top: 5,
-                  left: 0,
-                  fontWeight: FontWeight.w600,
-                  color: titleColor,
-                ).start,
-              ),
-              IconButton(
-                onPressed: () {
-                  Get.toNamed(AppRoute.settingScreen);
-                },
-                icon: SvgPicture.asset(
-                  AppIcon.menu,
-                  colorFilter: const ColorFilter.mode(
-                    Color(0xFFFDB623),
-                    BlendMode.srcIn,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: isBack
+            ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: InkWell(
+                      onTap: onBackTap ?? () => Navigator.pop(context),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.arrow_back_ios,
+                            size: 20,
+                            color: Color(0xFFFFFFFF),
+                          ),
+                          Flexible(
+                            child: CommonText(
+                              text: title,
+                              fontSize: 20,
+                              left: 0,
+                              fontWeight: FontWeight.w600,
+                              color: titleColor,
+                            ).start,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                    onPressed: () {
+                      Get.toNamed(AppRoute.settingScreen);
+                    },
+                    icon: SvgPicture.asset(
+                      AppIcon.menu,
+                      colorFilter: const ColorFilter.mode(
+                        Color(0xFFFDB623),
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: CommonText(
+                      text: title,
+                      fontSize: 24,
+                      top: 5,
+                      left: 0,
+                      fontWeight: FontWeight.w600,
+                      color: titleColor,
+                    ).start,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Get.toNamed(AppRoute.settingScreen);
+                    },
+                    icon: SvgPicture.asset(
+                      AppIcon.menu,
+                      colorFilter: const ColorFilter.mode(
+                        Color(0xFFFDB623),
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
       ),
       actions: actions,
     );

@@ -22,6 +22,7 @@ class HistoryDetailScreen extends StatelessWidget {
       backgroundColor: AppColor.black33,
       appBar: CommonAppBar(
         title: item.type == 'scan' ? 'Scan Details' : 'Generated QR',
+        isBack: true,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

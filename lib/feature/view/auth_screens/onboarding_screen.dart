@@ -209,7 +209,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     fill: BoxFit.cover,
                   ),
                 ),
-
                 AnimatedBuilder(
                   animation: _scanAnimation,
                   builder: (context, child) {
@@ -250,35 +249,35 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Widget _buildBottomSection() {
     return Container(
       width: double.infinity,
-      height: Get.height / 2.5,
-      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 36),
+      height: Get.height / 3.5,
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
       decoration: const BoxDecoration(
         color: Color(0xFF2C2C2C),
         borderRadius: BorderRadius.vertical(top: Radius.circular(36)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CommonText(
-            text: AppString.getStarted,
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-          ),
-
-          10.height,
-          const CommonText(
-            text: AppString.gotAndEnjoyOurFeature,
-              color: Color(0xFFAAAAAA),
-              fontSize: 18,
-              maxLines: 2,
-            fontWeight: FontWeight.w500,
-          ),
-
-          10.height,
-          _buildArrowButton(),
-          16.height,
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CommonText(
+              text: AppString.getStarted,
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+            ),
+        
+            const CommonText(
+              text: AppString.gotAndEnjoyOurFeature,
+                color: Color(0xFFAAAAAA),
+                fontSize: 18,
+                maxLines: 2,
+              fontWeight: FontWeight.w500,
+            ),
+        
+            15.height,
+            _buildArrowButton(),
+          ],
+        ),
       ),
     );
   }
@@ -286,10 +285,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Widget _buildArrowButton() {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(AppRoute.bottomNavScreen);
+        Get.offAllNamed(AppRoute.bottomNavScreen);
       },
       child: SizedBox(
-        width: 100, // ripple এর max size (52 + 28 + কিছুটা padding)
+        width: 100,
         height: 100,
         child: AnimatedBuilder(
           animation: _rippleAnimation,

@@ -34,7 +34,7 @@ class QrCodeGeneratorScreen extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColor.black33,
-        appBar: CommonAppBar(title: title),
+        appBar: CommonAppBar(title: title,isBack: true,),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
@@ -76,6 +76,9 @@ class QrCodeGeneratorScreen extends StatelessWidget {
                           titleSize: 16,
                           buttonHeight: 48,
                           onTap: () {
+                            if (!QrTypeFormFactory.validateForm(type)) {
+                              return;
+                            }
                             controller.generateQrContent(type);
                           },
                         ),
