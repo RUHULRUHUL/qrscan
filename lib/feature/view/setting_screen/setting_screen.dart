@@ -115,7 +115,7 @@ class _SettingScreenState extends State<SettingScreen> {
               title: AppString.share,
               subTitle: AppString.shareAppOther,
               onTap: () {
-                Share.share('Check out Mino QR Scanner & Generator app!');
+                Share.share('Check out Fast QR Scanner & Generator app!');
               },
             ),
             20.height,

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Mino QR',
+          title: 'Fast QR Scan',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
